@@ -1,0 +1,15 @@
+.middle {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  max-width: 86%;
+
+  margin-left: auto;
+  margin-top: 5rem;
+  gap: 2rem;
+}
+
+.gap {
+  display: flex;
+  gap: 4rem;
+}
