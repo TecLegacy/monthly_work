@@ -1,0 +1,54 @@
+.bg {
+  background: whitesmoke;
+  color: black;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 1rem auto;
+
+  width: 66.6%;
+  border-radius: 1.5rem;
+  padding: 1.2rems;
+}
+.cartBg {
+  background: rgb(50, 48, 48);
+
+  font-size: 1.2rem;
+  font-weight: 500;
+
+  width: 66.6%;
+  margin: 1rem auto;
+  padding: 1.2rem;
+
+  border-radius: 1rem;
+}
+.compact {
+  background: rgba(111, 102, 102, 0.873);
+  color: wheat;
+  width: 80%;
+  margin: 2rem auto;
+  border-radius: 0.3rem;
+  padding: 1.2rem;
+}
+
+.items {
+  padding: 1.5rem;
+  margin: 1.5rem;
+  position: relative;
+}
+
+.buttonEnd {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 1.5rem;
+}
+
+.split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.splitButton {
+  display: flex;
+  gap: 1.3rem;
+}
