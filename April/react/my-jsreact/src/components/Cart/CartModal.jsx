@@ -1,16 +1,27 @@
 import modules from './cart.module.css';
+import IncreDecre from './cart_dispatch/IncreDecre';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartAction } from '@/store/cartSlice';
+
+import ReactDOM from 'react-dom';
+
 const CartModal = () => {
-  const product = useSelector(state => state.cart.product);
   const dispatch = useDispatch();
-  const addItem = () => {
-    console.log('product');
-    console.log(product);
-    // dispatch(cartAction.addItem());
-  };
+
+  const product = useSelector(state => state.cart.product);
+  // const addItem = () => {
+  //   console.log(product);
+  //   // dispatch(cartAction.)
+  // };
+
+  // tempData handler
+  // const handleInputChange = e => {
+  //   console.log(e.target.value);
+  //   const tempVal = e.target.value;
+  //   addItem(tempVal);
+  // };
   return (
     <>
+      {/* {ReactDOM.createPortal( */}
       <div className={modules.cartBg}>
         Your Shopping Cart!
         <div className={modules.compact}>
@@ -25,15 +36,23 @@ const CartModal = () => {
               </div>
               <div className={modules.split}>
                 <span>x{item.quantity}</span>
-                <div className={modules.splitButton}>
-                  <button onClick={addItem}> + </button>
-                  <button> - </button>
-                </div>
+                {/* <div className={modules.splitButton}> */}
+                {/* <button onClick={addItem}>+</button>
+                  <button> - </button> */}
+                <IncreDecre
+                  item={item.item}
+                  quantity={item.quantity}
+                  price={item.price}
+                />
+                {/* </div> */}
               </div>
             </div>
           ))}
         </div>
       </div>
+      ,
+      {/* //   document.getElementById('modal')
+      // )} */}
     </>
   );
 };

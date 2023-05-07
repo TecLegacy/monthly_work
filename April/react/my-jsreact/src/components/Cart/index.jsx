@@ -1,13 +1,16 @@
-import React from 'react';
-import CartDesign from './CartDesign';
+import { useSelector } from 'react-redux';
 
-const Cart = () => {
-  const openCart = () => {
-    console.log('Opened');
+let size = 0;
+const Cart = ({ setOpenCart }) => {
+  const product = useSelector(state => state.cart.product);
+  size = product.length;
+
+  const cart = () => {
+    setOpenCart(p => !p);
   };
   return (
     <>
-      <button onClick={openCart}>Cart {1}</button>
+      <button onClick={cart}>Cart {size}</button>
     </>
   );
 };
