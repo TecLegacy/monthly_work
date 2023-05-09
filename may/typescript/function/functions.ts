@@ -21,7 +21,7 @@ console.log(userName('tec', 'legacy'));
  */
 
 // VOID type , unknown , any , default parameter , restparameter
-function somethingBlock(
+export function somethingBlock(
   para: unknown,
   para2: string = '',
   para3?: any,
@@ -45,10 +45,36 @@ address = 31;
 
 // HEADING: Imports and exports
 /**
- * Typescript uses Target as esnext - to make imports works
+ * Typescript uses Target as esnext - to make Promises works
  * import default , {named} from "filename"
  * export default filename or named export
  *
  * to initialize ts config file use
  * npx tsc --init
  */
+
+export function headUp(hello: string): void {
+  console.log(hello);
+}
+
+// HEADING: Promise function - {  }
+export const url = (): Promise<string> => Promise.reject('No data found!');
+// export const url = (): Promise<string> => Promise.resolve('Data from url');
+
+// HEADING: Functions taking another functions as callbacks
+export function addOne(
+  nums: number[],
+  plusOne: (v: number) => number
+): number[] {
+  return nums.map(plusOne);
+}
+console.log(addOne([1, 2, 3], v => v * 10)); // [10,20,30]
+
+// HEADING: function returning another functions
+type FirstName = (val: string) => string;
+function addLastName(lastName: string = 'Legacy'): FirstName {
+  return (firstName: string) => ` ${firstName} ${lastName}`;
+}
+const firstName = addLastName();
+console.log(firstName('Tec'));
+console.log(addLastName()('Kate'));
