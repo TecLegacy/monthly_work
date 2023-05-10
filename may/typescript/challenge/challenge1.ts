@@ -10,20 +10,11 @@ interface HouseWithID extends House {
 }
 
 // houses with string
-function findHouses(houses: string): HouseWithID[];
+function findHouses(houses: string | House[]): HouseWithID[];
 
 // houses string with filter callback (boolean)
 function findHouses(
-  houses: string,
-  filter: (house: House) => boolean
-): HouseWithID[];
-
-// houses []
-function findHouses(houses: House[]): HouseWithID[];
-
-// Houses []  with filter callback (boolean)
-function findHouses(
-  houses: House[],
+  houses: string | House[],
   filter: (house: House) => boolean
 ): HouseWithID[];
 
@@ -37,7 +28,7 @@ function findHouses(arg1: unknown, arg2?: unknown): HouseWithID[] {
     },
   ];
 
-  if(arg2 && typeof arg1 === 'string'  ){
+  if (typeof arg1 === 'string') {
     const houses = JSON.parse(arg1);
     houseWithId = houses.map((c: object, i: number) => {
       return {
@@ -45,23 +36,17 @@ function findHouses(arg1: unknown, arg2?: unknown): HouseWithID[] {
         id: i,
       };
     });
-
-    console.log(houseWithId.filter(arg2))
-  }else if(){
-
+  } else {
+    // const houses = JSON.parse(arg1);
+    houseWithId = houses.map((c: object, i: number) => {
+      return {
+        ...c,
+        id: i,
+      };
+    });
   }
 
-//   if (typeof arg1 === 'string') {
-//     const houses = JSON.parse(arg1);
-//     houseWithId = houses.map((c: object, i: number) => {
-//       return {
-//         ...c,
-//         id: i,
-//       };
-//     });
-//   }
-
-    return houseWithId;
+  return houseWithId;
 }
 
 console.log(findHouses(JSON.stringify(houses)));
@@ -70,4 +55,4 @@ console.log(
   findHouses(JSON.stringify(houses), ({ name }) => name === 'Atreides')
 );
 
-// console.log(findHouses(houses, ({ name }) => name === 'Harkonnen'));
+console.log(findHouses(houses, ({ name }) => name === 'Harkonnen'));
