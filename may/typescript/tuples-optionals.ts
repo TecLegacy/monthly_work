@@ -13,6 +13,9 @@ console.log(naam());
 SetName('Jake');
 console.log(naam());
 
+/**
+ * ----------------------------------------------------------------------
+ */
 // HEADING: Optionals fields & Optional callbacks
 interface User {
   id: number;
