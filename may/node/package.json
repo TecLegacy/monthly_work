@@ -1,0 +1,15 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "node-server",
+  "main": "server.js",
+  "author": "tec-legacy",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  }
+}
