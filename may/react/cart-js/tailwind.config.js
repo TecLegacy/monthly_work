@@ -7,6 +7,7 @@ export default {
       'blue-dark': '#A6E3E9',
       'button-dark': '#2A2F4F',
       'text-light': '#FDE2F3',
+      'regal-blue': '#243c5a',
     },
 
     extend: {},
