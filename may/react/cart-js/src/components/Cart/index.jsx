@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from '@/store/store';
+
 const DUMMY_ITEM = [
   {
     id: 1,
@@ -35,9 +38,11 @@ const DUMMY_ITEM = [
 ];
 
 const Cart = () => {
+  const dispatch = useDispatch();
   console.log(DUMMY_ITEM);
   const addToCart = product => {
     console.log(product);
+    dispatch(cartActions.addToCart(product));
   };
 
   return (
@@ -57,12 +62,10 @@ const Cart = () => {
             <span>
               Item Mango <sup>perItem/6$</sup>{' '}
             </span>
-            <span>
-              X 3 <div className=' mt-4'>Total Price - $ 18</div>{' '}
-            </span>
+            <span>X 3</span>
           </div>
-          <div className=' flex flex-col gap-8'>
-            <p className=' text-xl  font-semibold'> Lord of the Rings </p>
+          <div className=' flex flex-col gap-8  '>
+            <p className=' text-xl  font-semibold  mt-4'>Total Price - $18</p>
             <div className=' flex  gap-4  justify-end'>
               <button className=' hover:bg-blue-light transition duration-300 ease-in-out text-regal-blue'>
                 {' '}

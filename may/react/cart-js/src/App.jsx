@@ -1,5 +1,4 @@
-import Hello from '@/components/Hello';
-import Cart from './components/Cart';
+import Cart from '@/components/Cart';
 
 function App() {
   return (
