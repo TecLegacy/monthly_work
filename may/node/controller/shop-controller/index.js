@@ -5,6 +5,7 @@ const getShop = (req, res, next) => {
   res.render('shop/index.ejs', {
     title: 'Shopping',
     heading: 'Shop page 🛒',
+    path: 'Shop',
   });
 };
 
@@ -15,6 +16,7 @@ const postShop = (req, res, next) => {
   res.render('shop/index.ejs', {
     title: 'Shopping',
     heading: 'Shop page 🛒',
+    path: 'Shop',
   });
 };
 

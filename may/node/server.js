@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const colors = require('colors');
 
 // .env file handle
 require('dotenv').config();
@@ -32,13 +33,14 @@ app.use((err, req, res, next) => {
 });
 
 // User-Route
-app.use('/user', require('./router/user-routes/userRoutes'));
+app.use('/shop', require('./router/user-routes/userRoutes'));
 
 // Home-page
 app.get('/', (req, res) => {
   res.render('home/index.ejs', {
     title: 'Home Page',
     heading: 'Hello From EJS 🙋‍♂️',
+    path: 'Shop',
   });
 });
 
@@ -51,5 +53,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log('Server Started');
+  console.log(`Server Started at port ${process.env.PORT}`.underline.cyan);
 });
