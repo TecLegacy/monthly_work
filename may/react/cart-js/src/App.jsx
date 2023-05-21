@@ -3,11 +3,12 @@ import Cart from '@/components/Cart';
 import Notification from '@/ui/notification';
 // redux Store
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { uiActions } from '@/store/uiSlice';
+import { useEffect } from 'react';
+import { sendCartToFirebase } from '@/store/cartSlice';
+// import { uiActions } from '@/store/uiSlice';
 
 // to Stop initial cart sent to FireBase
-let initial = true;
+let isInitial = true;
 
 function App() {
   const dispatch = useDispatch();
@@ -15,73 +16,91 @@ function App() {
   const cart = useSelector(state => state.cart);
   const notification = useSelector(state => state.ui.showNotification);
 
-  const [loading, setLoading] = useState(false);
-
   // FireBase Realtime Database
+  /** Fat component approach
+   useEffect(() => {
+     const sendCart = async () => {
+       dispatch(
+         uiActions.notification({
+           title: 'Sending Cart to firebase',
+           message: 'Cart is being sent 📤',
+           status: 'sending',
+         })
+       );
+       setLoading(true);
+       try {
+         const response = await fetch(
+           'https://cart-npm-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json',
+           {
+             method: 'PUT',
+             body: JSON.stringify(cart),
+           }
+         );
+         if (!response.ok) {
+           console.log('No Response found!');
+           throw new Error('Something went wrong in Response');
+         }
+ 
+         dispatch(
+           uiActions.notification({
+             title: 'Sending Successful',
+             message: 'Cart is sent successfully 📤',
+             status: 'success',
+           })
+         );
+       } catch (error) {
+         console.log(error);
+         throw new Error('Something went wrong');
+       } finally {
+         setLoading(false);
+       }
+     };
+ 
+     // Debouncing
+     const timer = setTimeout(() => {
+       if (isInitial) {
+         isInitial = false;
+         return;
+       }
+       sendCart()
+         .then(() => {
+           console.log('Cart sent successfully');
+         })
+         .catch(error => {
+           console.log(' Error in sendCart API', error);
+           dispatch(
+             uiActions.notification({
+               title: 'Error While sending ',
+               message: 'Cart could not be sent successfully ⚠',
+               status: 'error',
+             })
+           );
+           throw new Error(error);
+         });
+     }, 2000);
+ 
+     return () => {
+       console.log('cleanUp');
+       clearTimeout(timer);
+     };
+   }, [cart, dispatch]);
+   * 
+   */
+
+  // Fat Reducer approach
   useEffect(() => {
-    const sendCart = async () => {
-      dispatch(
-        uiActions.notification({
-          title: 'Sending Cart to firebase',
-          message: 'Cart is being sent 📤',
-          status: 'sending',
-        })
-      );
-      setLoading(true);
-      try {
-        const response = await fetch(
-          'https://cart-npm-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json',
-          {
-            method: 'PUT',
-            body: JSON.stringify(cart),
-          }
-        );
-        if (!response.ok) {
-          console.log('No Response found!');
-          throw new Error('Something went wrong in Response');
-        }
-
-        dispatch(
-          uiActions.notification({
-            title: 'Sending Successful',
-            message: 'Cart is sent successfully 📤',
-            status: 'success',
-          })
-        );
-      } catch (error) {
-        console.log(error);
-        throw new Error('Something went wrong');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Debouncing
-    const timer = setTimeout(() => {
-      if (initial) {
-        initial = false;
+    const setTimer = setTimeout(() => {
+      if (isInitial) {
+        isInitial = false;
+        console.log(isInitial);
         return;
       }
-      sendCart()
-        .then(() => {
-          console.log('Cart sent successfully');
-        })
-        .catch(error => {
-          console.log(' Error in sendCart API', error);
-          dispatch(
-            uiActions.notification({
-              title: 'Error While sending ',
-              message: 'Cart could not be sent successfully ⚠',
-              status: 'error',
-            })
-          );
-          throw new Error(error);
-        });
+      dispatch(sendCartToFirebase(cart));
     }, 2000);
 
     return () => {
-      console.log('cleanUp');
-      clearTimeout(timer);
+      console.log('clean Up');
+      clearTimeout(setTimer);
     };
   }, [cart, dispatch]);
 
