@@ -32,6 +32,9 @@ app.use((err, req, res, next) => {
   throw new Error(err.stack);
 });
 
+//Admin-Route
+app.use('/admin', require('./router/admin-routes/adminRoutes'));
+
 // User-Route
 app.use('/shop', require('./router/user-routes/userRoutes'));
 
@@ -40,7 +43,7 @@ app.get('/', (req, res) => {
   res.render('home/index.ejs', {
     title: 'Home Page',
     heading: 'Hello From EJS 🙋‍♂️',
-    path: 'Shop',
+    path: 'Home',
   });
 });
 

@@ -1,17 +1,27 @@
 <nav class="nav-bar">
-  <ul>
-    <li>
-      <a href="/shop" class="<%= path==='Shop'?'hello ':'' %>">Shop</a>
+  <ul class="nav_list">
+    <li class="nav_list_items">
+      <a href="/shop" class="<%= path==='Shop'?'active ':'' %>">Shop</a>
     </li>
-    <li>
-      <a href="http://">Products</a>
+    <li class="nav_list_items">
+      <a href="/products" class="<%= path==='Products'?'active ':'' %>"
+        >Products</a
+      >
     </li>
-    <li>
-      <a href="http://">Cart</a>
+    <li class="nav_list_items">
+      <a href="/cart" class="<%= path==='Cart'?'active ':'' %>">Cart</a>
     </li>
-    <li>
-      <a href="http://">Add Product</a>
+    <li class="nav_list_items">
+      <a href="/admin" class="<%= path==='Add Product'?'active ':'' %>"
+        >Add Product</a
+      >
     </li>
-    <li><a href="http://">Admin Products </a></li>
+    <li class="nav_list_items">
+      <a
+        href="/admin/admin-products"
+        class="<%= path==='Admin Products'?'active ':'' %>"
+        >Admin Products
+      </a>
+    </li>
   </ul>
 </nav>

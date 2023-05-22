@@ -35,10 +35,32 @@ a:hover {
   color: #c3c6ddac;
 }
 
-.hello {
-  background-color: var(--blue);
-}
 .nav-bar {
-  /* color: #212a3e; */
   background-color: #00adb5;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.nav_list {
+  width: 83.3%;
+  margin: 0 auto;
+  gap: 2.5rem;
+  display: flex;
+  padding: 0.5rem 1rem;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.nav_list_items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav_list_items a:active,
+.nav_list_items a.active {
+  color: var(--primary-text);
 }
