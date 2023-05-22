@@ -4,7 +4,7 @@ import Notification from '@/ui/notification';
 // redux Store
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { sendCartToFirebase } from '@/store/cartSlice';
+import { sendCartToFirebase, fetchCartFromFirebase } from '@/store/cartSlice';
 // import { uiActions } from '@/store/uiSlice';
 
 // to Stop initial cart sent to FireBase
@@ -86,8 +86,11 @@ function App() {
    }, [cart, dispatch]);
    * 
    */
-
-  // Fat Reducer approach
+  //  Fetch cart from firebase
+  useEffect(() => {
+    console.log(dispatch(fetchCartFromFirebase()));
+  }, [dispatch]);
+  // Fat Reducer approach PUT
   useEffect(() => {
     const setTimer = setTimeout(() => {
       if (isInitial) {

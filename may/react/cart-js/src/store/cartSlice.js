@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { uiActions } from './uiSlice';
+
 const cartState = {
   product: [],
 };
@@ -8,6 +9,12 @@ export const cartSlice = createSlice({
   name: 'Cart',
   initialState: cartState,
   reducers: {
+    replaceCart(state, action) {
+      return {
+        product: action.payload || [],
+      };
+      // return action.payload;
+    },
     addToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.product.find(item => item.id === newItem.id);
@@ -93,7 +100,7 @@ export const cartSlice = createSlice({
 
 /**---------------------------- */
 
-// THUNK ACTION CREATOR FUNCTION
+// THUNK ACTION CREATOR FUNCTION by keshav
 export function sendCartToFirebase(cart) {
   // dispatch is sent via reduxToolkit
   return async dispatch => {
@@ -141,6 +148,50 @@ export function sendCartToFirebase(cart) {
     }
   };
 }
+
+// Fetch Firebase cart using action creator functions
+export const fetchCartFromFirebase = () => {
+  return async dispatch => {
+    //fetch function
+    const fetchCart = async () => {
+      const response = await fetch(
+        'https://cart-npm-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json'
+      );
+
+      if (!response.ok) {
+        throw new Error('Cant Fetch From Firebase 🔴');
+      }
+      const data = await response.json();
+
+      // console.log('data', 'typeof', typeof data, data.product);
+      dispatch(cartActions.replaceCart(data.product));
+      // dispatch(cartActions.replaceCart(data));
+    };
+
+    // Handling error
+    await fetchCart()
+      .then(() => {
+        dispatch(
+          uiActions.notification({
+            title: 'Fetched Successful',
+            message: 'Cart Fetched 📤',
+            status: 'success',
+          })
+        );
+      })
+      .catch(error => {
+        dispatch(
+          uiActions.notification({
+            title: 'Error While fetching cart ',
+            message: 'Cart could not be fetch successfully ⚠',
+            status: 'error',
+          })
+        );
+        console.log('Error while fetching cart from firebase');
+        throw new Error(error);
+      });
+  };
+};
 
 // Cart Actions
 export const cartActions = cartSlice.actions;
