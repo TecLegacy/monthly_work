@@ -3,6 +3,8 @@
 // Components
 import Cart from '@/components/Cart';
 import Notification from '@/ui/Notification';
+import Nav from '@/components/Nav';
+import Posts from '@/components/Posts';
 
 // redux Store
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +16,6 @@ let isInitial = true;
 
 function App() {
   const dispatch = useDispatch();
-  const product = useSelector(state => state.cart.product);
   const cart = useSelector(state => state.cart);
   const notification = useSelector(state => state.ui.showNotification);
 
@@ -41,7 +42,7 @@ function App() {
 
   return (
     <>
-      {notification && (
+      {/* {notification && (
         <Notification
           status={notification.status}
           message={notification.message}
@@ -49,17 +50,11 @@ function App() {
         />
       )}
 
-      <nav className=' flex  w-5/6 mx-auto justify-between items-center bg-transparent '>
-        <h1>Redux Toolkit Cart</h1>
+      <Nav />
+      <Cart /> */}
 
-        {/* Cart Counter */}
-        <h1 className=' flex items-center mt-2  justify-center gap-4 bg-regal-blue text-blue-light rounded-md px-2 py-2'>
-          <div>Cart</div>
-          <div>{product.length}</div>
-        </h1>
-      </nav>
-
-      <Cart />
+      {/* RTKQ POSTS */}
+      <Posts />
     </>
   );
 }
