@@ -1,11 +1,13 @@
+// import { uiActions } from '@/store/uiSlice';
+
 // Components
 import Cart from '@/components/Cart';
-import Notification from '@/ui/notification';
+import Notification from '@/ui/Notification';
+
 // redux Store
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { sendCartToFirebase, fetchCartFromFirebase } from '@/store/cartSlice';
-// import { uiActions } from '@/store/uiSlice';
 
 // to Stop initial cart sent to FireBase
 let isInitial = true;
@@ -16,8 +18,57 @@ function App() {
   const cart = useSelector(state => state.cart);
   const notification = useSelector(state => state.ui.showNotification);
 
-  // FireBase Realtime Database
-  /** Fat component approach
+  //  Fetch cart from firebase
+  useEffect(() => {
+    dispatch(fetchCartFromFirebase());
+  }, [dispatch]);
+
+  // Fat Reducer approach PUT to firebase
+  useEffect(() => {
+    const setTimer = setTimeout(() => {
+      if (isInitial) {
+        isInitial = false;
+        return;
+      }
+      dispatch(sendCartToFirebase(cart));
+    }, 2000);
+
+    return () => {
+      console.log('clean Up');
+      clearTimeout(setTimer);
+    };
+  }, [cart, dispatch]);
+
+  return (
+    <>
+      {notification && (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+          title={notification.title}
+        />
+      )}
+
+      <nav className=' flex  w-5/6 mx-auto justify-between items-center bg-transparent '>
+        <h1>Redux Toolkit Cart</h1>
+
+        {/* Cart Counter */}
+        <h1 className=' flex items-center mt-2  justify-center gap-4 bg-regal-blue text-blue-light rounded-md px-2 py-2'>
+          <div>Cart</div>
+          <div>{product.length}</div>
+        </h1>
+      </nav>
+
+      <Cart />
+    </>
+  );
+}
+
+export default App;
+
+// FireBase Realtime Database
+// Logic written using FAT component
+/** Fat component approach
    useEffect(() => {
      const sendCart = async () => {
        dispatch(
@@ -86,50 +137,3 @@ function App() {
    }, [cart, dispatch]);
    * 
    */
-  //  Fetch cart from firebase
-  useEffect(() => {
-    console.log(dispatch(fetchCartFromFirebase()));
-  }, [dispatch]);
-  // Fat Reducer approach PUT
-  useEffect(() => {
-    const setTimer = setTimeout(() => {
-      if (isInitial) {
-        isInitial = false;
-        console.log(isInitial);
-        return;
-      }
-      dispatch(sendCartToFirebase(cart));
-    }, 2000);
-
-    return () => {
-      console.log('clean Up');
-      clearTimeout(setTimer);
-    };
-  }, [cart, dispatch]);
-
-  return (
-    <>
-      {notification && (
-        <Notification
-          status={notification.status}
-          message={notification.message}
-          title={notification.title}
-        />
-      )}
-
-      <nav className=' flex  w-5/6 mx-auto justify-between items-center bg-transparent '>
-        <h1>Redux Toolkit Cart</h1>
-
-        {/* Cart Counter */}
-        <h1 className=' flex items-center mt-2  justify-center gap-4 bg-regal-blue text-blue-light rounded-md px-2 py-2'>
-          <div>Cart</div>
-          <div>{product.length}</div>
-        </h1>
-      </nav>
-
-      <Cart />
-    </>
-  );
-}
-
-export default App;

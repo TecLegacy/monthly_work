@@ -101,6 +101,7 @@ export const cartSlice = createSlice({
 /**---------------------------- */
 
 // THUNK ACTION CREATOR FUNCTION by keshav
+// Fat Reducer
 export function sendCartToFirebase(cart) {
   // dispatch is sent via reduxToolkit
   return async dispatch => {
