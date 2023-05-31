@@ -1,8 +1,8 @@
 import { useGetPostQuery, useGetAllPostsQuery } from '@/features/apis/apiSlice';
+import { useEditPostMutation } from '../../features/apis/apiSlice';
 
 const Posts = () => {
   const { data: singlePostData = [], isLoading } = useGetPostQuery(1);
-  const { data: allPostData = [], isLoadingAllPosts } = useGetAllPostsQuery();
 
   let content;
   if (isLoading) {
@@ -11,11 +11,63 @@ const Posts = () => {
     content = <h1>Data All loaded</h1>;
   }
 
-  // const tagStructure = tags => tags.join(' ');
-
   return (
     <>
+      {/* SINGLE POST  */}
+      <SinglePost />
+
+      {/* EDIT POST COMPONENTS */}
+      <EditPost />
+
+      {/* ALL POSTS */}
       {content}
+      <AllPost />
+    </>
+  );
+};
+
+export default Posts;
+
+// EDIT POST
+export function EditPost() {
+  const { data: singlePostData = [] } = useGetPostQuery(1);
+  const [updatePost, { isLoading }] = useEditPostMutation();
+  console.log(singlePostData);
+  console.log('editPostData', updatePost);
+
+  const updateHandler = async () => {
+    await updatePost({ id: singlePostData.id, title: 'keshav is god' });
+  };
+  return (
+    <>
+      <h1>Edit Post </h1>
+      <div>
+        <h2>{JSON.stringify(singlePostData)}</h2>
+        <button onClick={updateHandler}>update</button>
+      </div>
+    </>
+  );
+}
+
+// SINGLE POST
+
+export function SinglePost() {
+  // const [data:singlePost] =useGetPostQuery()
+  const { data: singlePost = [] } = useGetPostQuery(1);
+  return (
+    <>
+      <hr />
+      <h2>Single Post</h2>
+      <div>{JSON.stringify(singlePost)}</div>
+    </>
+  );
+}
+
+// All POSTS
+export function AllPost() {
+  const { data: allPostData = [] } = useGetAllPostsQuery();
+  return (
+    <>
       <div className='mx-auto w-5/6 bg-white p-4 rounded-xs'>
         <div className='w-3/4 mx-auto flex rounded-sm items-center justify-between gap-8 p-4'>
           <div className='text-white rounded-sm bg-slate-400 font-semibold w-2/5 flex justify-center items-center'>
@@ -34,6 +86,7 @@ const Posts = () => {
                         {item.body}
                       </p>
                       <details>
+                        <summary>Tags</summary>
                         {item?.tags?.map((tag, index) => (
                           <div
                             key={index}
@@ -59,6 +112,4 @@ const Posts = () => {
       </div>
     </>
   );
-};
-
-export default Posts;
+}

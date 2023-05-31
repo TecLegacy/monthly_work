@@ -1,4 +1,5 @@
 // import { uiActions } from '@/store/uiSlice';
+import MUI from '@/MUITEST/MUI';
 
 // Components
 import Cart from '@/components/Cart';
@@ -55,6 +56,9 @@ function App() {
 
       {/* RTKQ POSTS */}
       <Posts />
+
+      {/* MATERIAL UI Test Components */}
+      {/* <MUI /> */}
     </>
   );
 }
