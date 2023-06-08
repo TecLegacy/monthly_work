@@ -32,17 +32,23 @@ export default Posts;
 export function EditPost() {
   const { data: singlePostData = [] } = useGetPostQuery(1);
   const [updatePost, { isLoading }] = useEditPostMutation();
-  console.log(singlePostData);
-  console.log('editPostData', updatePost);
 
   const updateHandler = async () => {
-    await updatePost({ id: singlePostData.id, title: 'keshav is god' });
+    try {
+      await updatePost({
+        id: singlePostData.id,
+        // id: 1,
+        title: 'keshav is god',
+      }).unwrap();
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
   };
   return (
     <>
       <h1>Edit Post </h1>
       <div>
-        <h2>{JSON.stringify(singlePostData)}</h2>
+        {/* <h2>{JSON.stringify(singlePostData)}</h2> */}
         <button onClick={updateHandler}>update</button>
       </div>
     </>
@@ -57,7 +63,7 @@ export function SinglePost() {
   return (
     <>
       <hr />
-      <h2>Single Post</h2>
+      <h1>Single Post</h1>
       <div>{JSON.stringify(singlePost)}</div>
     </>
   );
