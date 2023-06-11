@@ -1,5 +1,6 @@
 import { useGetPostQuery, useGetAllPostsQuery } from '@/features/apis/apiSlice';
 import { useEditPostMutation } from '../../features/apis/apiSlice';
+import { Suspense } from 'react';
 
 const Posts = () => {
   const { data: singlePostData = [], isLoading } = useGetPostQuery(1);
@@ -21,7 +22,12 @@ const Posts = () => {
 
       {/* ALL POSTS */}
       {content}
-      <AllPost />
+
+      {/* Suspense loading */}
+      <Suspense fallback={<p>Loading...</p>}>
+        Check
+        <AllPost />
+      </Suspense>
     </>
   );
 };
