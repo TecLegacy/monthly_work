@@ -1,4 +1,5 @@
-import { FC } from 'react';
+'use client';
+import { FC, useState } from 'react';
 import Button from './ui/Button';
 import { set, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +10,8 @@ import axios, { AxiosError } from 'axios';
 type FormValue = z.infer<typeof emailValidation>;
 
 const AddFriendButton: FC = ({}) => {
+  const [showSuccessState, setShowSuccessState] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -18,10 +21,16 @@ const AddFriendButton: FC = ({}) => {
 
   //Add Friend
   async function addFriend(email: string) {
-    const verifiedEmail = emailValidation.parse(email);
-
     try {
-      axios.post('/api/friends/add');
+      const validatedEmail = emailValidation.parse({
+        email,
+      });
+
+      await axios.post('/api/friends/add', {
+        email: validatedEmail,
+      });
+
+      setShowSuccessState(true);
     } catch (err) {
       if (err instanceof AxiosError) {
         setError('email', { message: 'Failed Request' });
@@ -32,8 +41,14 @@ const AddFriendButton: FC = ({}) => {
         setError('email', { message: 'Failed Validation' });
         return;
       }
+
+      setError('email', { message: 'Something went wrong.' });
     }
   }
+
+  const onSubmit = (data: FormValue) => {
+    addFriend(data.email);
+  };
 
   return (
     <>
@@ -51,6 +66,10 @@ const AddFriendButton: FC = ({}) => {
             type='text'
             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
           />
+          <p className='mt-1 text-sm text-red-600'>{errors.email?.message}</p>
+          {showSuccessState ? (
+            <p className='mt-1 text-sm text-green-600'>Friend request sent!</p>
+          ) : null}
           <Button> Add </Button>
         </div>
       </form>
