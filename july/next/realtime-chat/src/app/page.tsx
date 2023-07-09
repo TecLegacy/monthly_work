@@ -1,14 +1,14 @@
+import AddFriendButton from '@/components/AddFriendButton';
 import Button from '@/components/ui/Button';
 import { redis } from '@/lib/db';
 
-export default async function Home() {
-  await redis.set('redis', 'installation');
+export default function Home() {
   return (
     <>
-      <Button variant={'default'} size={'lg'} isLoading={false}>
-        click
-      </Button>
+      {/* <Button v  */}
       <hr />
+
+      <AddFriendButton />
     </>
   );
 }
