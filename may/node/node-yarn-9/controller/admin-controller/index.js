@@ -1,3 +1,5 @@
+const userModal = require("../../model/userModel");
+
 // @Path - /admin/add-product
 // @method - GET
 // @Accessible ALL
@@ -25,6 +27,9 @@ const postProduct = (req, res) => {
   const image = req.body.image;
   const description = req.body.description;
   const price = req.body.price;
+
+  const UserModal = new userModal(title, image, description, price);
+  UserModal.save();
 
   res.redirect("/");
 };
