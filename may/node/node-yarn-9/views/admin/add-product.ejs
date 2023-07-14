@@ -7,11 +7,29 @@
     <%- include('../partials/nav.ejs')%>
 
     <h1 class="back">Add-products</h1>
-    <p>check</p>
 
-    <form action="">
-      <label for="">Title</label>
-      <input type="text" />
+    <form action="/admin/add-product" method="POST" class="form">
+      <div class="form_title">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" />
+      </div>
+
+      <div class="form_imageUrl">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" name="imageUrl" id="imageUrl" />
+      </div>
+
+      <div class="form_price">
+        <label for="price">Price $</label>
+        <input type="number" step="0.1" name="price" id="price" />
+      </div>
+
+      <div class="form_description">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" rows="5"></textarea>
+      </div>
+
+      <button type="submit" class="btn">Add Products</button>
     </form>
   </body>
 </html>

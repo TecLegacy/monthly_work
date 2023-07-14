@@ -3,9 +3,9 @@
 // @Accessible ALL
 
 const getProduct = (req, res) => {
-  res.render('admin/add-product.ejs', {
-    path: 'Add Product',
-    title: 'Add Product 🛍',
+  res.render("admin/add-product.ejs", {
+    path: "Add Product",
+    title: "Add Product 🛍",
   });
 };
 
@@ -13,10 +13,20 @@ const getProduct = (req, res) => {
 // @method - GET
 // @Accessible ALL
 const getAdminProducts = (req, res) => {
-  res.render('admin/admin-products.ejs', {
-    path: 'Admin Products',
-    title: 'Admin Products 🎫',
+  res.render("admin/admin-products.ejs", {
+    path: "Admin Products",
+    title: "Admin Products 🎫",
   });
 };
 
-module.exports = { getProduct, getAdminProducts };
+const postProduct = (req, res) => {
+  console.log("title", req.body);
+  const title = req.body.title;
+  const image = req.body.image;
+  const description = req.body.description;
+  const price = req.body.price;
+
+  res.redirect("/");
+};
+
+module.exports = { getProduct, getAdminProducts, postProduct };
