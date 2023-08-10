@@ -6,6 +6,13 @@ require('dotenv').config();
 const port = process.env.PORT || 4000;
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// middleware
+app.use((err, req, res, next) => {
+  next();
+  console.log('hitting first middleware');
+  throw new Error(err.stack);
+});
+
 app.use('/user', require('./routes/user'));
 app.use('/admin', (req, res) => {
   res.status(200).json({
