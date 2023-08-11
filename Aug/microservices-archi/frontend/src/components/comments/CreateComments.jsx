@@ -1,5 +1,10 @@
 import axios from 'axios';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
+
+CreateComments.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 const CreateComments = ({ id }) => {
   const commentRef = useRef();

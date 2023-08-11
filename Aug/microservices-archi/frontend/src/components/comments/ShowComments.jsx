@@ -1,23 +1,30 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+
+ShowComments.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 const ShowComments = ({ id }) => {
   const [comments, setComments] = useState([]);
-  const getComments = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4001/posts/${id}/comments`
-      );
-      // Fixed Backend
-      const testData = typeof response.data === 'string' ? [] : response.data;
-      setComments(testData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    const getComments = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4001/posts/${id}/comments`
+        );
+        // Fixed Backend
+        const testData = typeof response.data === 'string' ? [] : response.data;
+        setComments(testData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getComments();
-  }, []);
+  }, [id]);
 
   return (
     <>
