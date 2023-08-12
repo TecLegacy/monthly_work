@@ -2,10 +2,6 @@ import axios from 'axios';
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-CreateComments.propTypes = {
-  id: PropTypes.string.isRequired,
-};
-
 const CreateComments = ({ id }) => {
   const commentRef = useRef();
   const commentSubmitHandler = async e => {
@@ -13,7 +9,7 @@ const CreateComments = ({ id }) => {
 
     try {
       await axios.post(`http://localhost:4001/posts/${id}/comments`, {
-        data: commentRef.current.value,
+        content: commentRef.current.value,
       });
       commentRef.current.value = 'comment created';
     } catch (error) {
@@ -38,6 +34,10 @@ const CreateComments = ({ id }) => {
       </form>
     </div>
   );
+};
+
+CreateComments.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default CreateComments;

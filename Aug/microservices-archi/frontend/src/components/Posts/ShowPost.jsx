@@ -23,17 +23,18 @@ const ShowPost = () => {
   }, []);
 
   const PostList = title.map(element => (
-    <div className='check' key={element.postId}>
+    <div className='check' key={element.id}>
+      <div>{JSON.stringify(element)}</div>
       <div>
         <h2 className=' text-lg font-bold tracking-wide pl-4'>
           {element.title.toUpperCase()}
         </h2>
         <div className=' ml-8 py-4'>
-          <ShowComments id={element.postId} />
+          <ShowComments id={element.id} />
         </div>
       </div>
 
-      <CreateComments id={element.postId} />
+      <CreateComments id={element.id} />
     </div>
   ));
   return (

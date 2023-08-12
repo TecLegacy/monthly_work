@@ -2,10 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-ShowComments.propTypes = {
-  id: PropTypes.string.isRequired,
-};
-
 const ShowComments = ({ id }) => {
   const [comments, setComments] = useState([]);
 
@@ -17,8 +13,9 @@ const ShowComments = ({ id }) => {
           `http://localhost:4001/posts/${id}/comments`
         );
         // Fixed Backend
-        const testData = typeof response.data === 'string' ? [] : response.data;
-        setComments(testData);
+        // const testData = typeof response.data === 'string' ? [] : response.data;
+        setComments(response.data);
+        console.log('response.data', response.data);
       } catch (error) {
         console.log(error);
       }
@@ -26,6 +23,7 @@ const ShowComments = ({ id }) => {
     getComments();
   }, [id]);
 
+  console.log(' comments', comments);
   return (
     <>
       <ul className='list-disc list-inside '>
@@ -34,13 +32,15 @@ const ShowComments = ({ id }) => {
             <li className=' text-slate-600'> Add Some Comments</li>
           </>
         ) : (
-          comments.map(comment => (
-            <li key={comment.commentId}>{comment.comment}</li>
-          ))
+          comments.map(comment => <li key={comment.id}>{comment.content}</li>)
         )}
       </ul>
     </>
   );
+};
+
+ShowComments.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default ShowComments;
