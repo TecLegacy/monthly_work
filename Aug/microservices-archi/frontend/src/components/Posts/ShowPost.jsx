@@ -24,7 +24,6 @@ const ShowPost = () => {
 
   const PostList = title.map(element => (
     <div className='check' key={element.id}>
-      <div>{JSON.stringify(element)}</div>
       <div>
         <h2 className=' text-lg font-bold tracking-wide pl-4'>
           {element.title.toUpperCase()}

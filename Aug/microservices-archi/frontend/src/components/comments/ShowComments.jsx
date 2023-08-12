@@ -15,7 +15,6 @@ const ShowComments = ({ id }) => {
         // Fixed Backend
         // const testData = typeof response.data === 'string' ? [] : response.data;
         setComments(response.data);
-        console.log('response.data', response.data);
       } catch (error) {
         console.log(error);
       }
