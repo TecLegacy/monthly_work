@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import axios from 'axios';
 const PostCreate = () => {
   //   const [title, setTitle] = useState('');
@@ -10,6 +10,7 @@ const PostCreate = () => {
 
     //Send data /posts - title
     try {
+      console.log(postTitle);
       await axios.post('http://localhost:4000/posts', {
         title: postTitle,
       });

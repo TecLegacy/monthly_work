@@ -5,24 +5,33 @@ import CreateComments from '../comments/CreateComments';
 import ShowComments from '../comments/ShowComments';
 
 const ShowPost = () => {
-  const [title, setTitle] = useState([]);
+  // const [title, setTitle] = useState([]);
+  const [responseQuery, setResponseQuery] = useState([]);
   useEffect(() => {
     // Fetch Post
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/posts');
+        // const response = await axios.get('http://localhost:4000/posts');
+        const query = await axios.get('http://localhost:4002/posts');
 
-        const transformedData = Object.values(response.data);
-        setTitle(transformedData);
+        /**
+         * Query service response
+         */
+        const queryResponse = Object.values(query.data);
+        setResponseQuery(queryResponse);
+
+        // const transformedData = Object.values(response.data);
+        // setTitle(transformedData);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchPosts().catch(error => console.log(error));
+    fetchPosts();
     return () => {};
   }, []);
 
-  const PostList = title.map(element => (
+  // console.log(responseQuery, 'Response Query');
+  const PostList = responseQuery.map(element => (
     <div className='check' key={element.id}>
       <div>
         <h2 className=' text-lg font-bold tracking-wide pl-4'>
