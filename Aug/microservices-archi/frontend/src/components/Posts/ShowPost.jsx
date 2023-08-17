@@ -38,7 +38,7 @@ const ShowPost = () => {
           {element.title.toUpperCase()}
         </h2>
         <div className=' ml-8 py-4'>
-          <ShowComments id={element.id} />
+          <ShowComments id={element.id} comments={element.Comments} />
         </div>
       </div>
 
